@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import math
 from evaluacionalvr2dummi import evaluacionalvr2
 from TestData import testpobinicial2
 archivo = pd.read_excel('MATRIZHV2.xlsx', header=None, skiprows=1, nrows=72)
@@ -40,7 +41,7 @@ mejor1 = np.zeros((1, v+1), dtype=float, order='C')
 #mejor1(1,1:v+1)=random('unif',-1,1,1,v+1); #output aleatory number with uniform distribution
 mejor1 = np.random.uniform(-1, 1, size=(1, v+1))
 
-#mejor1(1,v+1)=-inf; #set a value infinite negative
+mejor1[0,v]=-math.inf; #set a value infinite negative
 cd=0
 
 #manipulaMatriz = False
@@ -64,7 +65,7 @@ while cd == 0:
                 manipulaMatriz = True
       
             matrizai22[s-1][rr-1] = sum(matrizai22[s-1,:t+1])
-            
+        #endfor    
             
         
         promedioai2 = np.mean(matrizai22[:,rr-1])
@@ -78,7 +79,7 @@ while cd == 0:
                 manipulaMatriz = True
                 
             matrizdatos[w-1,rr] = K2*matrizai22[w-1,rr-1]
-            
+        #endfor    
             
         manipulaMatriz = False
         for zx in range(1,t+1):
@@ -87,7 +88,7 @@ while cd == 0:
                 manipulaMatriz = True
                 
             matrizdatos[zx-1,rr+1] =  matrizdatos[zx-1,rr-1] - matrizdatos[zx-1,rr]
-            
+        #endfor    
         manipulaMatriz = False    
         for sa in range(1,t+1):
             if  manipulaMatriz is not True:
@@ -95,16 +96,55 @@ while cd == 0:
                 manipulaMatriz = True
                 
             matrizdatos[sa-1,rr+2] = matrizdatos[sa-1,rr] - ybarra2      
-            
+        #endfor    
 
         sse = sum(matrizdatos[:,rr+1]**2)
         ssr = sum(matrizdatos[:,rr+2]**2)
         sst = sse + ssr
         
         R[m-1,0] = ssr / sst
-        print (R[m-1,0])
-        print ("--------------------\n")
-    cd = 1      
+       
+        
+    #endfor
+    manipulaMatriz = False
+
+    #pobinicial2[:,v]= R;
+    if  manipulaMatriz is not True:
+        pobinicial2 = np.hstack((pobinicial2,R))
+        manipulaMatriz = True
+        
+    #sort array by column specified (v)
+    #orden1=sortrows(pobinicial2,v+1); in octave
+    orden1 = pobinicial2[np.argsort(pobinicial2[:,v])]
+
+    #mejorTem1=zeros(1,v+1);
+    mejor = np.zeros((1, v+1), dtype=float, order='C') #new line
+    mejorTem1 = np.zeros((1, v+1), dtype=float, order='C')
+    mejorTem1[0,:] = orden1[hh-1,:]
+    
+    if mejor1[0,v] >= mejorTem1[0,v]:
+        mejor[0,:] = mejor1[0,:]
+    else:
+        mejor[0,:] = mejorTem1[0,:]
+    
+    #endif
+    
+    
+    mejor1[0,:] = mejor[0,:]
+    print( mejor1[0,:]) 
+  
+    if math.isinf(mejor1[0,v]): 
+        cd = 0
+    else:
+        cd = 1
+    #endif
+    print(mejor1)
+    print ("--------------------\n")
+    print('estas  en el ciclo de busqueda')
+    
+ 
+    
+         
 
 
         
