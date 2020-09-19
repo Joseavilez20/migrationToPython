@@ -43,7 +43,7 @@ mejor1 = np.zeros((1, v+1), dtype=float, order='C')
 #mejor1(1,1:v+1)=random('unif',-1,1,1,v+1); #output aleatory number with uniform distribution
 mejor1 = np.random.uniform(-1, 1, size=(1, v+1))
 
-mejor1[0,v]=-math.inf; #set a value infinite negative
+mejor1[0,v]=-math.inf #set a value infinite negative
 
 tic=timeit.default_timer()
 toc = tic
@@ -61,7 +61,7 @@ while cd == 0:
     #for  m=1:hh
     for m in range(1,hh+1):
         
-        matrizai22 = evaluacionalvr2(pobinicial2,matrizdatos,m,rr,matrizai,t);
+        matrizai22 = evaluacionalvr2(pobinicial2,matrizdatos,m,rr,matrizai,t)
         manipulaMatriz = False
         for s in range(1,3):
             #np.insert(arr, 3, [0]*72, axis=1)
@@ -156,26 +156,26 @@ while cd2 == 0:
     #pobinicial2 = np.random.uniform(-1, 1, size=(hh, v))
    
     for i in range(1, ncte2+1):
-        print(i)
+        
         R = np.zeros((hh, 1), dtype=float, order='C')
         
         for m in range(1, hh+1):
             
-            matrizai22=evaluacionalvr2(pobinicial2,matrizdatos,m,rr,matrizai,t);
+            matrizai22=evaluacionalvr2(pobinicial2,matrizdatos,m,rr,matrizai,t)
             
             manipulaMatriz = False
             for s in range(1, t+1):
                 if  manipulaMatriz is not True:
                     matrizai22 = np.hstack((matrizai22,[[0]]*72))
                     manipulaMatriz = True
-                matrizai22[s-1,rr-1]= sum(matrizai22[s-1,:]);
+                matrizai22[s-1,rr-1]= sum(matrizai22[s-1,:])
                 
             #endfor
                 
-            promedioai2=np.mean(matrizai22[:,rr-1]);
+            promedioai2=np.mean(matrizai22[:,rr-1])
 
-            ybarra2=np.mean(matrizdatos[:,rr-1]);
-            K2= ybarra2/promedioai2 ;
+            ybarra2=np.mean(matrizdatos[:,rr-1])
+            K2= ybarra2/promedioai2 
 
             manipulaMatriz = False
             for w in range(1,t+1):
@@ -210,49 +210,57 @@ while cd2 == 0:
             
             R[m-1,0] = ssr / sst
                 
-
+            
         #endfor
         
         #pobinicial2[:,v+1]=R;
+        rows , columns = pobinicial2.shape #new line
         manipulaMatriz = False
         if  manipulaMatriz is not True:
-            pobinicial2 = np.hstack((pobinicial2,R))
-            manipulaMatriz = True
+            if columns < 41:  #new line
+                pobinicial2 = np.hstack((pobinicial2,R))
+                manipulaMatriz = True
         
         orden1 = pobinicial2[np.argsort(pobinicial2[:,v])]
         
+        mejor = np.zeros((1, v+1), dtype=float, order='C') #new line
         mejorTem1 = np.zeros((1, v+1), dtype=float, order='C')
-        mejorTem1[0,0:v]=orden1[hh-1,0:v];
+        
+        mejorTem1[0,:] = orden1[hh-1,:]
+        
         if mejor1[0,v] >= mejorTem1[0,v]:
-            mejor[0,0:v]=mejor1[0,0:v];
+            mejor[0,:]=mejor1[0,:]
         else:
-            mejor[0,0:v]=mejorTem1[0,0:v];
+            mejor[0,:]=mejorTem1[0,:]
             
         #endif
-        mejor1[0,0:v]=mejor[0,0:v];
+        mejor1[0,:]=mejor[0,:]
 
-        conteo=i;
-
+        conteo=i
+        
         for ll in range(1, hh+1):
-            #x=rand(1);
-            x = testrand1[ll]
+            ##x=rand(1);
+            x = testrand1[ll-1]
             if x> pn2:
-                pobnueva22 = buenamelodiaMIalv(pobinicial2,hh,mm,v,mejorTem1,vm,rr);
-                #pobinicial2(ll,1:v)=pobnueva22(1,1:v);
-            #else:
-                #mejorTemsab1(1,1:v) =notacromaticaMIalvmaxima(pobinicial2,v,mejor1,opp,ll,matrizdatos,matrizai,t,rr);
+                pobnueva22 = buenamelodiaMIalv(pobinicial2,hh,mm,v,mejorTem1,vm,rr)
+                ##pobinicial2(ll,1:v)=pobnueva22(1,1:v)
+            ##else:
+                ##mejorTemsab1(1,1:v) =notacromaticaMIalvmaxima(pobinicial2,v,mejor1,opp,ll,matrizdatos,matrizai,t,rr);
   
-                #pobinicial2(ll,1:v)= mejorTemsab1(1,1:v);
-            #endif
+                ##pobinicial2(ll,1:v)= mejorTemsab1(1,1:v);
+            ##endif
+             
 
         #endfor
                 
     #endfor
     #toc = timeit.default_timer() - tic
+    print("---------pobnueva22------------\n")
+    print(pobnueva22)
     cd2 = 1
+    
+    
 
-print ("--------------------\n")
-print(R)
     
  
     
