@@ -4,6 +4,7 @@ import math
 import timeit
 from evaluacionalvr2dummi import evaluacionalvr2
 from buenamelodiaMIalv import buenamelodiaMIalv
+from notacromaticaMIalvmaxima import notacromaticaMIalvmaxima
 from TestData import testpobinicial2, testrand1
 archivo = pd.read_excel('MATRIZHV2.xlsx', header=None, skiprows=1, nrows=72)
 matrizdatos= archivo.to_numpy()
@@ -45,6 +46,9 @@ mejor1 = np.random.uniform(-1, 1, size=(1, v+1))
 
 mejor1[0,v]=-math.inf #set a value infinite negative
 
+######
+mejorTemsab1= np.zeros((1,v), dtype=float, order='C') #new line 
+
 tic=timeit.default_timer()
 toc = tic
 
@@ -80,16 +84,17 @@ while cd == 0:
         manipulaMatriz = False
         for w in range(1,t+1):
             #Note: Add in a fuction
-            if  manipulaMatriz is not True:
+            if  manipulaMatriz is not True and matrizdatos.shape[1] < 4:
                 matrizdatos = np.hstack((matrizdatos,[[0]]*72))
                 manipulaMatriz = True
                 
             matrizdatos[w-1,rr] = K2*matrizai22[w-1,rr-1]
+            
         #endfor    
             
         manipulaMatriz = False
         for zx in range(1,t+1):
-            if  manipulaMatriz is not True:
+            if  manipulaMatriz is not True and matrizdatos.shape[1] < 5:
                 matrizdatos = np.hstack((matrizdatos,[[0]]*72))
                 manipulaMatriz = True
                 
@@ -97,12 +102,14 @@ while cd == 0:
         #endfor    
         manipulaMatriz = False    
         for sa in range(1,t+1):
-            if  manipulaMatriz is not True:
+            if  manipulaMatriz is not True and matrizdatos.shape[1] < 6:
                 matrizdatos = np.hstack((matrizdatos,[[0]]*72))
                 manipulaMatriz = True
                 
             matrizdatos[sa-1,rr+2] = matrizdatos[sa-1,rr] - ybarra2      
-        #endfor    
+        #endfor
+##        print('!!SHAPE MATRIZDATOS::',matrizdatos.shape)
+
 
         sse = sum(matrizdatos[:,rr+1]**2)
         ssr = sum(matrizdatos[:,rr+2]**2)
@@ -115,6 +122,7 @@ while cd == 0:
     manipulaMatriz = False
 
     #pobinicial2[:,v]= R;
+    ##NOTA ,puede tener problemas en otra iteración
     if  manipulaMatriz is not True:
         pobinicial2 = np.hstack((pobinicial2,R))
         manipulaMatriz = True
@@ -156,6 +164,7 @@ while cd2 == 0:
     #pobinicial2 = np.random.uniform(-1, 1, size=(hh, v))
    
     for i in range(1, ncte2+1):
+        print(i);
         
         R = np.zeros((hh, 1), dtype=float, order='C')
         
@@ -178,18 +187,20 @@ while cd2 == 0:
             K2= ybarra2/promedioai2 
 
             manipulaMatriz = False
+            
             for w in range(1,t+1):
                 #Note: Add in a fuction
-                if  manipulaMatriz is not True:
+                if  manipulaMatriz is not True and matrizdatos.shape[1] < 4:
                     matrizdatos = np.hstack((matrizdatos,[[0]]*72))
                     manipulaMatriz = True
                     
                 matrizdatos[w-1,rr] = K2*matrizai22[w-1,rr-1]
-            #endfor    
-                
+            
+            #endfor
+                    
             manipulaMatriz = False
             for zx in range(1,t+1):
-                if  manipulaMatriz is not True:
+                if  manipulaMatriz is not True and matrizdatos.shape[1] < 5:
                     matrizdatos = np.hstack((matrizdatos,[[0]]*72))
                     manipulaMatriz = True
                     
@@ -197,12 +208,14 @@ while cd2 == 0:
             #endfor    
             manipulaMatriz = False    
             for sa in range(1,t+1):
-                if  manipulaMatriz is not True:
+                if  manipulaMatriz is not True and matrizdatos.shape[1] < 6:
                     matrizdatos = np.hstack((matrizdatos,[[0]]*72))
                     manipulaMatriz = True
                     
                 matrizdatos[sa-1,rr+2] = matrizdatos[sa-1,rr] - ybarra2      
-            #endfor    
+            #endfor
+           
+              
 
             sse = sum(matrizdatos[:,rr+1]**2)
             ssr = sum(matrizdatos[:,rr+2]**2)
@@ -243,11 +256,13 @@ while cd2 == 0:
             x = testrand1[ll-1]
             if x> pn2:
                 pobnueva22 = buenamelodiaMIalv(pobinicial2,hh,mm,v,mejorTem1,vm,rr)
-                ##pobinicial2(ll,1:v)=pobnueva22(1,1:v)
-            ##else:
-                ##mejorTemsab1(1,1:v) =notacromaticaMIalvmaxima(pobinicial2,v,mejor1,opp,ll,matrizdatos,matrizai,t,rr);
+                pobinicial2[ll-1,0:v-1] = pobnueva22[0,0:v-1]
+            else:
+                
+                mejorTemsab1[0,0:v-1] = notacromaticaMIalvmaxima(pobinicial2,v,mejor1,opp,ll,matrizdatos,matrizai,t,rr)
+                
   
-                ##pobinicial2(ll,1:v)= mejorTemsab1(1,1:v);
+                pobinicial2[ll-1,0:v-1]= mejorTemsab1[0,0:v-1];
             ##endif
              
 
@@ -255,8 +270,8 @@ while cd2 == 0:
                 
     #endfor
     #toc = timeit.default_timer() - tic
-    print("---------pobnueva22------------\n")
-    print(pobnueva22)
+##    print("---------pobnueva22------------\n")
+    #print(pobnueva22)
     cd2 = 1
     
     

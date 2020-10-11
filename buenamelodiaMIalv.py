@@ -7,6 +7,7 @@ def buenamelodiaMIalv(pobinicial2,hh,mm,v,mejorTem1,vm,rr):
     matrizpadres = np.zeros((2, v+1), dtype=float, order='C')
     padre1 = np.zeros((1, v+1), dtype=float, order='C') #new line
     for k in range(1,3):
+        #ESTO PUEDE CAMBIAR A random.uniform(0,1)
         #a = random.randint(1,hh)
         #b = random.randint(1,hh)
         a = testData[k-1]
@@ -75,7 +76,7 @@ def buenamelodiaMIalv(pobinicial2,hh,mm,v,mejorTem1,vm,rr):
         
         ####vm = 0.233438
         pobnueva22[0,v] = prob
-        print("pobnueva22[0,v]:",pobnueva22[0,v])
+        #print("pobnueva22[0,v]:",pobnueva22[0,v])
         
         if pobnueva22[0,v] < vm: 
             

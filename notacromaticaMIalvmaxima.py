@@ -1,19 +1,26 @@
 import math
+import numpy as np
+from Maximaalv import maximaalv
 def notacromaticaMIalvmaxima(pobinicial2,v,mejor1,opp,ll,matrizdatos,matrizai,t,rr):
-    h[0,: ] = pobinicial2[ll-1,0:v-1]
-
+    h = np.zeros((1,v), dtype=float, order='C')
+    h[0,: ] = pobinicial2[ll-1,0:v]
+    
     for u in range(1,v+1):
-        e = h[0,u-1];
-        dar =rand(1);
-        
+        e = h[0,u-1]
+        ##dar =rand(1)
+        #dar = random.uniform(0,1)
+        dar = 0.59497
+        #%opp=0.483767
         if dar < opp:
-            pobinicial2[ll-1,u-1] = mejor1[0,u-1]; 
+            
+            pobinicial2[ll-1,u-1] = mejor1[0,u-1]
+            
         else:
         
             temp1 =  math.ceil(e/0.5);
-            nota2 = temp1 - 12 * math.floor(temp1/12);
+            nota2 = temp1 - 12 * math.floor(temp1/12)
             #if 0<= nota2<=11
-            r1 = floor(temp1/12)
+            r1 = math.floor(temp1/12)
             
             if nota2 == 0:
                 
@@ -43,7 +50,7 @@ def notacromaticaMIalvmaxima(pobinicial2,v,mejor1,opp,ll,matrizdatos,matrizai,t,
                 
                 z1= ((r1)*6)+ 2.5
                 
-            elif dnota2 == 7:
+            elif nota2 == 7:
                 
                 z1= ((r1)*6) + 3
                 
@@ -66,6 +73,13 @@ def notacromaticaMIalvmaxima(pobinicial2,v,mejor1,opp,ll,matrizdatos,matrizai,t,
             else:
                 print('Default')
                 #endif
-        
+##        print(" size pobinicial2");
+##        print(pobinicial2.shape) 
+        pobinicial2[ll-1,:] = maximaalv(pobinicial2,e,v,u,z1,matrizdatos,matrizai,t,rr,ll)
+##        maximaalv(pobinicial2,e,v,u,z1,matrizdatos,matrizai,t,rr,ll)
+         
     #endfor
-    print(z1)
+##    mejorTemsab1= np.zeros((1,v+1), dtype=float, order='C') #new line
+##    mejorTemsab1[0,0:v-1]=pobinicial2[ll-1,0:v-1]
+    return pobinicial2[ll-1,0:v-1] #changed
+
