@@ -5,7 +5,9 @@ def maximaalv(pobinicial,e,v,u,z1,matrizdatos,matrizai,t,rr,ll):
 ##    print('**************COMPROBAR MATRIZDATOS******************')
 ##    print(np.allclose(matrizdatos,matrizdatos2))
 ##    breakpoint()
-    
+    a = None
+    b = None
+    c = None
     if e>=z1 and  e<=(z1 + 0.25): 
         a = z1
         b = e
@@ -19,15 +21,16 @@ def maximaalv(pobinicial,e,v,u,z1,matrizdatos,matrizai,t,rr,ll):
     primero = np.zeros((2, v+1), dtype=float, order='C')
     primero[0,:] = pobinicial[ll-1,:]
     primero[1,:] = pobinicial[ll-1,:]
-    #primero[0,u-1] = np.random.uniform(a, b, size=(1,1))
-    #primero[1,u-1] = np.random.uniform(b, c, size=(1,1))
-    primero[0,u-1] = 0.315473
-    primero[1,u-1] = 0.440822
+    primero[0,u-1] = np.random.uniform(a, b, size=(1,1))
+    primero[1,u-1] = np.random.uniform(b, c, size=(1,1))
+    #ELIMINAR
+##    primero[0,u-1] = 0.315473
+##    primero[1,u-1] = 0.440822
     #primero( 1,u): -0.943167
     #primero( 2,u): -0.750958
     
     busqueda = np.zeros((2, v), dtype=float, order='C')
-
+    #$$$$$$$$$$$ ANALIZAR DONE $$$$$$$$$$$$$$$
     busqueda[0,:] = primero[0,0:v]
     busqueda[1,:] = primero[1,0:v]
     
@@ -92,14 +95,15 @@ def maximaalv(pobinicial,e,v,u,z1,matrizdatos,matrizai,t,rr,ll):
     if columns < 41:  #new line
         busqueda = np.hstack((busqueda,[[0]]*2))
 ##            manipulaMatriz = True
-    busqueda[:,v:] = R
+    #$$$$$$$$$$ ANALIZAR POR QUE V:] Y NO :V]$$$$$$$$$$$$
+    busqueda[:,v:] = R #changed
 
     orden111 = busqueda[np.argsort(busqueda[:,v])]
     
     
     mejorTem111 = np.zeros((1,v+1), dtype=float, order='C')
-
-    mejorTem111[0,0:v-1] = orden111[orden111.shape[0]-1,0:v-1]
+    #$$$$$$$$$$$
+    mejorTem111[0,0:v] = orden111[orden111.shape[0]-1,0:v]
     pobinicial = mejorTem111
              
     mas = pobinicial

@@ -9,7 +9,7 @@ import numpy as np
 import math
 def evaluacionalvr2(pobinicial2, matrizdatos, m, rr, matrizai, t):
     #se redeclara matrizai para que vuelva a contener zeros
-    matrizai = np.zeros((t, rr-1), dtype=float, order='C')
+    matrizai = np.zeros((t, rr-1), dtype=float, order='C') #newline
     for k in range(1,t+1):
         
         for j in range(1,(rr-1)+1):

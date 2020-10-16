@@ -1,17 +1,19 @@
 import random
 import numpy as np
 def buenamelodiaMIalv(pobinicial2,hh,mm,v,mejorTem1,vm,rr):
-    testData = [9,2,3]
-    testData2 = [7,6,5]
-    #matrizpadres=zeros(2,v+1);
+    #ELIMINAR
+##    testData = [9,2,3] 
+##    testData2 = [7,6,5]
+    
     matrizpadres = np.zeros((2, v+1), dtype=float, order='C')
     padre1 = np.zeros((1, v+1), dtype=float, order='C') #new line
     for k in range(1,3):
-        #ESTO PUEDE CAMBIAR A random.uniform(0,1)
-        #a = random.randint(1,hh)
-        #b = random.randint(1,hh)
-        a = testData[k-1]
-        b = testData2[k-1]
+        
+        a = random.randint(1,hh)
+        b = random.randint(1,hh)
+        #ELIMINAR
+##        a = testData[k-1]
+##        b = testData2[k-1]
         
         while a == b:
             b = random.randint(1,hh)
@@ -27,8 +29,8 @@ def buenamelodiaMIalv(pobinicial2,hh,mm,v,mejorTem1,vm,rr):
     #endfor
     pobnueva1 = np.zeros((2, v+1), dtype=float, order='C')
     pobnueva22 = np.zeros((1, v+1), dtype=float, order='C')
-    #e = np.random.rand()
-    e = 0.63675
+    e = np.random.rand()
+##    e = 0.63675 #ELIMINAR
     
     if e < mm:
         pobnueva22[0,:]=mejorTem1[0,:]  
@@ -38,12 +40,12 @@ def buenamelodiaMIalv(pobinicial2,hh,mm,v,mejorTem1,vm,rr):
         
         for j in range(1, v+1):
             
-            #k= random.randint(1,2)
-            #####################
-            if np.mod(j,2) == 0:
-                k = 1
-            else:
-                k = 2
+            k= random.randint(1,2)
+            #########ELIMINAR############
+##            if np.mod(j,2) == 0:
+##                k = 1
+##            else:
+##                k = 2
             #####################
            
             if k == 1:
@@ -61,12 +63,12 @@ def buenamelodiaMIalv(pobinicial2,hh,mm,v,mejorTem1,vm,rr):
 
     for j in range(1, rr):
 
-        #prob = np.random.uniform(0, 1, size=(1, 1))
-        #####################
-        if np.mod(j,2) == 1:
-            prob = 0.85040
-        else:
-            prob = 0.11480
+        prob = np.random.uniform(0, 1, size=(1, 1))
+        #########ELIMINAR############
+##        if np.mod(j,2) == 1:
+##            prob = 0.85040
+##        else:
+##            prob = 0.11480
         #####################
 
         ####MODIFICATED SHAPE FOR THE CHANGE OF  40 TO 41 ###
@@ -76,22 +78,23 @@ def buenamelodiaMIalv(pobinicial2,hh,mm,v,mejorTem1,vm,rr):
             #v = v - 1
         
         ####vm = 0.233438
+           
         pobnueva22[0,v] = prob
         
         
         
         if pobnueva22[0,v] < vm: 
             
-            #na = random.randint((1 +(20*(j-1))),(20*j))
+            na = random.randint((1 +(20*(j-1))),(20*j))
             ##random('unif',-1,1) -> np.random.uniform(-1, 1, size=(1, 1)) NO TEST
-            #pobnueva22[0,na-1] = np.random.uniform(-1, 1, size=(1, 1));
-            #################
-            if np.mod(j,2) == 1:
-                na = 7
-                pobnueva22[0,na-1] = -0.93007
-            else:
-                na = 32
-                pobnueva22[0,na-1] = 0.20198
+            pobnueva22[0,na-1] = np.random.uniform(-1, 1, size=(1, 1));
+##            #######ELIMINAR##########
+##            if np.mod(j,2) == 1:
+##                na = 7
+##                pobnueva22[0,na-1] = -0.93007
+##            else:
+##                na = 32
+##                pobnueva22[0,na-1] = 0.20198
             #endif
             #################
            
@@ -101,16 +104,19 @@ def buenamelodiaMIalv(pobinicial2,hh,mm,v,mejorTem1,vm,rr):
     
             #mod=zeros(1,v);
             mod = np.zeros((1, v), dtype=float, order='C')
-            
-            mod[0,:] = pobnueva22[0,:v] 
+
+            #$$$$$$$$$ ANALIZAR CHANGED 
+            mod[0,:] = pobnueva22[0,:v] #DONE
    
-            #sa = random.randint(1,2)
-            sa = 2 ###
-            #if sa==1;
+            sa = random.randint(1,2)
+##            sa = 2 #ELIMINAR
+            
             if sa == 1:
                 
-                #a = random.randint(8 +(20*(j-1)), (20*j))
-                a = 10 - 1
+                a = random.randint(8 +(20*(j-1)), (20*j))
+##                a = 10 - 1 #ELIMINAR
+                #$$$$$$$ ANALIZAR ES NECESARIO RESTAR -1 A 'a' $$$$$$$$$$$
+                a = a-1#$$$$$$
                 b = a - 7
                 c = a - 4
                 d = a - 3
@@ -124,8 +130,10 @@ def buenamelodiaMIalv(pobinicial2,hh,mm,v,mejorTem1,vm,rr):
                 
                 
             else:
-                #a= random.randint((1 +(20*(j-1))), ((20*j)-8)) 
-                a = 5 - 1 
+                a= random.randint((1 +(20*(j-1))), ((20*j)-8))
+##                a = 5 - 1 #ELIMINAR
+                #$$$$$$$ ANALIZAR ES NECESARIO RESTAR -1 A 'a' $$$$$$$$$$$
+                a = a -1
                 b = a + 7;
                 c = a + 3;
                 d = a + 4;
