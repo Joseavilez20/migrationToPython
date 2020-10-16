@@ -1,7 +1,10 @@
 import numpy as np
+
 from evaluacionalvr2dummi import evaluacionalvr2
 def maximaalv(pobinicial,e,v,u,z1,matrizdatos,matrizai,t,rr,ll):
-
+##    print('**************COMPROBAR MATRIZDATOS******************')
+##    print(np.allclose(matrizdatos,matrizdatos2))
+##    breakpoint()
     
     if e>=z1 and  e<=(z1 + 0.25): 
         a = z1
@@ -24,22 +27,20 @@ def maximaalv(pobinicial,e,v,u,z1,matrizdatos,matrizai,t,rr,ll):
     #primero( 2,u): -0.750958
     
     busqueda = np.zeros((2, v), dtype=float, order='C')
-##    print('******************primero*********************')
-##    print(primero[0,0:v-1])
-##    breakpoint()
+
     busqueda[0,:] = primero[0,0:v]
     busqueda[1,:] = primero[1,0:v]
-    print('******************busqueda********************')
-    print(busqueda)
-    breakpoint()
+    
     
     R = np.zeros((2,1), dtype=float, order='C')
 
 
     for m in range(1,3):
+      
 
         matrizai = evaluacionalvr2(busqueda,matrizdatos,m,rr,matrizai,t);
-       
+
+           
         rows , columns = matrizai.shape #new line
         manipulaMatriz = False
         for s in range(1,t+1):
@@ -50,7 +51,8 @@ def maximaalv(pobinicial,e,v,u,z1,matrizdatos,matrizai,t,rr,ll):
             matrizai[s-1,rr-1] = sum(matrizai[s-1,:])
                 
         #endfor
-
+        
+        
         promedioai = np.mean(matrizai[:,rr-1])
         ybarra = np.mean(matrizdatos[:,rr-1])
         K = ybarra/promedioai
@@ -69,9 +71,6 @@ def maximaalv(pobinicial,e,v,u,z1,matrizdatos,matrizai,t,rr,ll):
             matrizdatos[sa-1,rr+2]= matrizdatos[sa-1,rr] - ybarra
             
         #endfor
-##        print('**************MATRIZDATOS******************')
-##        print(matrizdatos.shape)
-##        print(matrizdatos) 
         
 
         sse = sum(matrizdatos[:,rr+1]**2)
@@ -81,22 +80,20 @@ def maximaalv(pobinicial,e,v,u,z1,matrizdatos,matrizai,t,rr,ll):
         R[m-1,0] = ssr /sst
          
     #endfor
+    
          
         
 ##    #busqueda[:,v+1] = R
 
     rows , columns = busqueda.shape #new line
     manipulaMatriz = False
+   
 ##    if  manipulaMatriz is not True:
     if columns < 41:  #new line
         busqueda = np.hstack((busqueda,[[0]]*2))
 ##            manipulaMatriz = True
     busqueda[:,v:] = R
-    print('***R****',R)
-    print('**************BUSQUEDA******************')
-    print(busqueda.shape)
-    print(busqueda)
-    breakpoint()
+
     orden111 = busqueda[np.argsort(busqueda[:,v])]
     
     

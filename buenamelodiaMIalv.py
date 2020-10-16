@@ -57,6 +57,7 @@ def buenamelodiaMIalv(pobinicial2,hh,mm,v,mejorTem1,vm,rr):
         
         
     #endif
+    
 
     for j in range(1, rr):
 
@@ -76,7 +77,8 @@ def buenamelodiaMIalv(pobinicial2,hh,mm,v,mejorTem1,vm,rr):
         
         ####vm = 0.233438
         pobnueva22[0,v] = prob
-        #print("pobnueva22[0,v]:",pobnueva22[0,v])
+        
+        
         
         if pobnueva22[0,v] < vm: 
             
@@ -92,6 +94,7 @@ def buenamelodiaMIalv(pobinicial2,hh,mm,v,mejorTem1,vm,rr):
                 pobnueva22[0,na-1] = 0.20198
             #endif
             #################
+           
 
         else:
         
@@ -99,7 +102,7 @@ def buenamelodiaMIalv(pobinicial2,hh,mm,v,mejorTem1,vm,rr):
             #mod=zeros(1,v);
             mod = np.zeros((1, v), dtype=float, order='C')
             
-            mod[0,:] = pobnueva22[0,:v]
+            mod[0,:] = pobnueva22[0,:v] 
    
             #sa = random.randint(1,2)
             sa = 2 ###
@@ -133,6 +136,7 @@ def buenamelodiaMIalv(pobinicial2,hh,mm,v,mejorTem1,vm,rr):
                 pobnueva22 = mod;
                 
             #endif
+            
 
         #endif
                 

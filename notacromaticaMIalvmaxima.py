@@ -4,9 +4,11 @@ from Maximaalv import maximaalv
 def notacromaticaMIalvmaxima(pobinicial2,v,mejor1,opp,ll,matrizdatos,matrizai,t,rr):
     h = np.zeros((1,v), dtype=float, order='C')
     h[0,: ] = pobinicial2[ll-1,0:v]
-    
+   
     for u in range(1,v+1):
+        matrizdatos2 = np.copy(matrizdatos)
         e = h[0,u-1]
+       
         ##dar =rand(1)
         #dar = random.uniform(0,1)
         dar = 0.59497
@@ -72,14 +74,14 @@ def notacromaticaMIalvmaxima(pobinicial2,v,mejor1,opp,ll,matrizdatos,matrizai,t,
                 
             else:
                 print('Default')
-                #endif
-##        print(" size pobinicial2");
-##        print(pobinicial2.shape) 
-        pobinicial2[ll-1,:] = maximaalv(pobinicial2,e,v,u,z1,matrizdatos,matrizai,t,rr,ll)
-##        maximaalv(pobinicial2,e,v,u,z1,matrizdatos,matrizai,t,rr,ll)
-         
+        #endif
+ 
+        pobinicial2[ll-1,:] = maximaalv(pobinicial2,e,v,u,z1,matrizdatos2,matrizai,t,rr,ll)
+        
     #endfor
 ##    mejorTemsab1= np.zeros((1,v+1), dtype=float, order='C') #new line
 ##    mejorTemsab1[0,0:v-1]=pobinicial2[ll-1,0:v-1]
-    return pobinicial2[ll-1,0:v-1] #changed
+    
+    
+    return pobinicial2[ll-1,0:v] #changed
 
