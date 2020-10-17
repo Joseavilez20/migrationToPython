@@ -372,7 +372,9 @@ for sa in range(1,t+xc+1):
 sse=sum(matrizhan[:,rr+1]**2)
 ssr=sum(matrizhan[:,rr+2]**2)
 sst= sse + ssr
-print(sst)
+
+
+
 
     
          
